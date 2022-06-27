@@ -15,6 +15,10 @@ class Comments {
     this.#comments.unshift(comment);
   }
 
+  visit(visitor) {
+    visitor(this.#comments);
+  }
+
   toString() {
     return this.#comments.map(({ name, message, date, time }) => {
       const nameString = `<td>${name}</td>`;

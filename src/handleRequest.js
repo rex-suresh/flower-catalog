@@ -1,11 +1,17 @@
 const fs = require('fs');
 const { handleFileRequest } = require('./handleFiles.js');
 const { Comments } = require('./comment.js');
-const comments = new Comments([]);
+const commentsFile = 'public/.comments.json';
+const comments = new Comments(JSON.parse(fs.readFileSync(commentsFile, 'utf8')));
 
 const catalogPageHandler = (request, response, path) => {
   const pagePath = '/flower-catalog.html';
   return handleFileRequest({ uri: pagePath }, response, path);
+};
+
+const writeToFile = (comments) => {
+  const stringComments = JSON.stringify(comments);
+  fs.writeFileSync(commentsFile, stringComments, 'utf8');
 };
 
 const generateGuestBookPage = (request, response, path) => {
@@ -13,6 +19,7 @@ const generateGuestBookPage = (request, response, path) => {
   const page = pageRaw.replace(
     '_DATE_TIME_NAME_COMMENTS_LIST_', comments.toString());
   response.send(page);
+  comments.visit(writeToFile);
   return true;
 };
 
