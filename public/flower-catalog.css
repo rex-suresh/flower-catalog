@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.page-wrapper {
+  height: 100%;
+  width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: orange;
+  text-align: center;
+  border-bottom: 1px solid gray;
+  padding: 20px;
+  width: 100%;
+}
+
+article {
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+article nav {
+  align-self: center;
+}
+
+article p {
+  font-size: 0.85em;
+  margin: 10px 10px;
+  letter-spacing: 0.3px;
+  line-height: 1.2em;
+}
+
+.entry {
+  display: block;
+}
+
+.entry .description {
+  padding: 20px 0;
+}
+
+.main-image {
+  border: 1px solid black;
+  width: 700px;
+  align-self: flex-start;
+  margin: 5px;
+}
+
+.main-image img {
+  width: 100%;
+}
+
+.flower {
+  height: 300px;
+  margin: 2px;
+  width: fit-content;
+  overflow-y: hidden;
+  float: left;
+}
+
+.flower img {
+  height: 350px;
+}
+
+.book-download {
+  margin: 10px;
+}
+
+.guest-book h3{
+  padding: 20px 0;
+  font-size: 1.4em;
+}
+
+.page-wrapper section {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid black;
+}
+
+table {
+  padding: 5px;
+  row-gap: 10px;
+}
