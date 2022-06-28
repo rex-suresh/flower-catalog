@@ -1,22 +1,28 @@
-class Comments {
+class GuestBook {
   #comments;
   constructor(comments) {
     this.#comments = comments
   }
 
-  addComment(name, message) {
+  addComment({name, message}) {
     const date = new Date();
-    const dateRaw =
-      `${date.getDate()} ${date.getMonth()} ${date.getFullYear()}`;
-    const rawTime =
-      `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    const dateRaw = this.#dateString(date);
+    const rawTime = this.#timeString(date)
     
     const comment = { name, message, date: dateRaw, time: rawTime };
     this.#comments.unshift(comment);
   }
 
-  visit(visitor) {
-    visitor(this.#comments);
+  get comments() {
+    return this.#comments;
+  }
+
+  #timeString(date) {
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  }
+
+  #dateString(date) {
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   }
 
   #toHtml(tag, content) {
@@ -39,4 +45,4 @@ class Comments {
   }
 }
 
-module.exports = { Comments };
+module.exports = { GuestBook };
