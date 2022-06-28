@@ -1,5 +1,5 @@
 const parseToChar = (chars) => {
-  const lookup = { '%2F': '/', '+': ' ' };
+  const lookup = { '%2F': '/', '+': ' ', '%0D': '\r', '%0A': '\n' };
   let parsedChars = chars;
 
   Object.entries(lookup).forEach(

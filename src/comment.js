@@ -19,15 +19,23 @@ class Comments {
     visitor(this.#comments);
   }
 
-  toString() {
-    return this.#comments.map(({ name, message, date, time }) => {
-      const nameString = `<td>${name}</td>`;
-      const messageString = `<td>${message}</td>`;
-      const dateString = `<td>${date}</td>`;
-      const timeString = `<td>${time}</td>`;
+  #toHtml(tag, content) {
+    return `<${tag}>${content}</${tag}>`;
+  }
 
-      return `<tr>${[dateString, timeString, nameString, messageString].join('')}</tr>`;
-    }).join('');
+  #getRowString({ name, message, date, time }) {
+    const nameString = this.#toHtml('td', name);
+    const messageString = this.#toHtml('td', message);
+    const dateString = this.#toHtml('td', date);
+    const timeString = this.#toHtml('td', time);
+
+    const rowContent = [dateString, timeString, nameString, messageString]
+      .join('');
+    return this.#toHtml('tr', rowContent);
+  }
+
+  toString() {
+    return this.#comments.map(content => this.#getRowString(content)).join('');
   }
 }
 

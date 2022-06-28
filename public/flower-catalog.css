@@ -83,5 +83,14 @@ article p {
 
 table {
   padding: 5px;
-  row-gap: 10px;
+  row-gap: 15px;
+}
+
+table td {
+  padding: 0 10px;
+}
+
+#pot-image :target{
+  visibility: hidden;
+  display: none;
 }
