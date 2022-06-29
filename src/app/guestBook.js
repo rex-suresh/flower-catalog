@@ -26,41 +26,26 @@ class GuestBook {
 
   addComment({name, message}) {
     const date = new Date();
-    const dateRaw = this.#dateString(date);
-    const rawTime = this.#timeString(date)
     
-    const comment = { name, message, date: dateRaw, time: rawTime };
+    const comment = { name, message, date: date.toLocaleString() };
     this.#comments.unshift(comment);
-  }
-
-  get comments() {
-    return this.#comments;
   }
 
   get pageRaw() {
     return this.#page;
   }
 
-  #timeString(date) {
-    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  }
-
-  #dateString(date) {
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-  }
 
   #toHtml(tag, content) {
     return `<${tag}>${content}</${tag}>`;
   }
 
-  #getRowString({ name, message, date, time }) {
+  #getRowString({ name, message, date }) {
     const nameString = this.#toHtml('td', name);
     const messageString = this.#toHtml('td', message);
     const dateString = this.#toHtml('td', date);
-    const timeString = this.#toHtml('td', time);
 
-    const rowContent = [dateString, timeString, nameString, messageString]
-      .join('');
+    const rowContent = [dateString, nameString, messageString].join('');
     return this.#toHtml('tr', rowContent);
   }
 
