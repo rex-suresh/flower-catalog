@@ -1,31 +1,44 @@
 const fs = require('fs');
-const { GuestBook } = require('./comment.js');
-const { generateGuestBookPage, addComment } = require('./generateGuestPage.js');
-
-const comments = JSON.parse(fs.readFileSync('data/.comments.json', 'utf8'));
-const guestBook = new GuestBook(comments);
+const { GuestBook } = require('./guestBook.js');
+const { handleMethod } = require('./handleMethod.js');
+const { guestBookPage, addComment } = require('./generateGuestPage.js');
 
 const catalogPageHandler = (request, response) => {
   response.statusCode = 301;
   response.setHeader('Location', '/flower-catalog.html');
   response.end();
+  return true;
 };
 
-const handleRequest = (request, response) => {
-  const pathName = request.url.pathname;
+const attachGuestBook = (handler, guestBook) => (request, response) => {
+  request['guest-book'] = guestBook;
+  return handler(request, response);
+};
+
+const handleGuestPageRequest = (
+  template,
+  commentsFile,
+  readFile,
+  writeFile) => {
+
+  const guestBook = new GuestBook(template, commentsFile, readFile, writeFile);
+  guestBook.load();
   
-  if (pathName === '/') {
-    return catalogPageHandler(request, response);
-  }
-  if (pathName === '/guest-book') {
-    request['guest-book'] = guestBook;
-    return generateGuestBookPage(request, response);
-  }
-  if (pathName === '/add-comment') {
-    request['guest-book'] = guestBook;
-    return addComment(request, response);
-  }
+  const handlers = [
+    handleMethod('/', { 'GET': catalogPageHandler }),
+    handleMethod('/guest-book',
+      { 'GET': attachGuestBook(guestBookPage, guestBook) }),
+    handleMethod('/add-comment',
+      { 'GET': attachGuestBook(addComment, guestBook) }),
+  ];
+    
+  return (request, response) => {
+  for (const handler of handlers) {
+    if (handler(request, response)) {
+      return true;
+    }
+  };
   return false;
-};
+}};
 
-module.exports = { handleRequest };
+module.exports = { handleGuestPageRequest };

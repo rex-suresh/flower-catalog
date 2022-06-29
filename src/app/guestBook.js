@@ -1,7 +1,27 @@
 class GuestBook {
+  #template;
   #comments;
-  constructor(comments) {
-    this.#comments = comments
+  #commentsFile;
+  #readFile;
+  #writeFile;
+  #page;
+  
+  constructor(template, commentsFile, readFile, writeFile) {
+    this.#template = template;
+    this.#commentsFile = commentsFile;
+    this.#readFile = readFile;
+    this.#writeFile = writeFile;
+    this.#comments = [];
+    this.#page = '';
+  }
+
+  load() {
+    this.#comments = JSON.parse(this.#readFile(this.#commentsFile, 'utf8'));
+    this.#page = this.#readFile(this.#template, 'utf8');
+  }
+
+  save() {
+    this.#writeFile(this.#commentsFile, JSON.stringify(this.#comments, ' ', 2));
   }
 
   addComment({name, message}) {
@@ -15,6 +35,10 @@ class GuestBook {
 
   get comments() {
     return this.#comments;
+  }
+
+  get pageRaw() {
+    return this.#page;
   }
 
   #timeString(date) {
@@ -41,7 +65,7 @@ class GuestBook {
   }
 
   toString() {
-    return this.#comments.map(content => this.#getRowString(content)).join('');
+    return this.#comments.map(comment => this.#getRowString(comment)).join('');
   }
 }
 

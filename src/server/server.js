@@ -5,6 +5,7 @@ const startServer = (port, router) => {
   const server = createServer((request, response) => {
     const { method, url } = request;
     const host = request.headers.host;
+    
     request.url = new URL(`http://${host}${url}`);
     console.log(method, request.url.pathname);
     

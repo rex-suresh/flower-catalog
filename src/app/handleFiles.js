@@ -38,6 +38,7 @@ const isFile = (fileName) =>
 const getContentType = (ext) => {
   const contentTypes = {
     '.html': 'text/html',
+    '.css': 'text/css',
     '.jpeg': 'image/jpeg',
     '.jpg': 'image/jpeg',
     '.gif': 'image/gif',
