@@ -1,21 +1,20 @@
-const fs = require('fs');
 const path = require('path');
 
-const getEntries = (entryName) => {
+const getEntries = (entryName, fs) => {
   if (fs.statSync(entryName).isFile()) {
     return entryName;
   }
-  return getFiles(entryName);
+  return getFiles(entryName, fs);
 };
 
-const getFiles = (dir) => {
+const getFiles = (dir, fs) => {
   const dirContents = fs.readdirSync(dir);
   const files = dirContents.flatMap(
-    dirEntry => getEntries(`${dir}/${dirEntry}`));
+    dirEntry => getEntries(`${dir}/${dirEntry}`, fs));
   return files;
 };
 
-const readFile = (file, fileCache) => {
+const readFile = (file, fileCache, fs) => {
   fs.readFile(file, (err, data) => {
     if (err) {
       console.error(err);
@@ -25,14 +24,14 @@ const readFile = (file, fileCache) => {
   })
 };
 
-const cacheFiles = (contentDir) => {
+const cacheFiles = (contentDir, fs) => {
   const cache = {}
-  const files = getFiles(contentDir);
-  files.forEach(file => readFile(file, cache));
+  const files = getFiles(contentDir, fs);
+  files.forEach(file => readFile(file, cache, fs));
   return cache;
 };
 
-const isFile = (fileName) =>
+const isFile = (fileName, fs) =>
   fs.existsSync(fileName) && fs.statSync(fileName).isFile();
 
 const getContentType = (ext) => {
@@ -56,17 +55,17 @@ const serveFileContents = (fileName, body, response) => {
   return true;
 };
 
-const handleFileRequest = (dirPath) => {
-  const fileCache = cacheFiles(dirPath);
+const fileHandler = (dirPath, fs) => {
+  const fileCache = cacheFiles(dirPath, fs);
   
   return (request, response) => {
     const fileName = `${dirPath}${request.url.pathname}`;
     
-    if (isFile(fileName) && fileCache[fileName]) {
+    if (isFile(fileName, fs) && fileCache[fileName]) {
       return serveFileContents(fileName, fileCache[fileName], response);
     }
     return false;
   }
 };
 
-module.exports = { handleFileRequest };
+module.exports = { fileHandler };

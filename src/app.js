@@ -1,19 +1,20 @@
-const { readFileSync, writeFileSync } = require('fs');
+const fs = require('fs');
+const { readFileSync, writeFileSync } = fs;
 const { notFoundHandler } = require('./app/notFoundHandler.js');
-const { handleFileRequest } = require('./app/handleFiles.js');
-const { handleGuestPageRequest } = require('./app/handleRequest.js');
+const { fileHandler } = require('./app/handleFiles.js');
+const { handleGuestPageRequest } = require('./app/requestRouter.js');
 const { routeRequest } = require('./server/router.js');
 
 
 const createRouter = (path) => {
   const handlers = [
     handleGuestPageRequest(
-      'src/templates/guest-book.html',
-      'data/.comments.json',
+      './src/templates/guest-book.html',
+      './data/.comments.json',
       readFileSync,
       writeFileSync),
     
-    handleFileRequest(path),
+    fileHandler(path, fs),
     notFoundHandler
   ];
   return routeRequest(handlers);

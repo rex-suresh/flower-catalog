@@ -20,6 +20,11 @@ const getParams = (searchParams) => {
   return params;
 };
 
+const attachGuestBook = (handler, guestBook) => (request, response) => {
+  request['guest-book'] = guestBook;
+  return handler(request, response);
+};
+
 const addComment = (request, response) => {
   const guestBook = request['guest-book'];
   const params = getParams(request.url.searchParams);
@@ -35,4 +40,4 @@ const addComment = (request, response) => {
   return true;
 };
 
-module.exports = { guestBookPage, addComment };
+module.exports = { guestBookPage, addComment, attachGuestBook };

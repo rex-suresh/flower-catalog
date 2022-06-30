@@ -16,7 +16,7 @@ class GuestBook {
   }
 
   load() {
-    this.#comments = JSON.parse(this.#readFile(this.#commentsFile, 'utf8'));
+    this.#comments = JSON.parse(this.#readFile(this.#commentsFile));
     this.#page = this.#readFile(this.#template, 'utf8');
   }
 
