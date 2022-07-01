@@ -1,4 +1,4 @@
-const config = require('./src/.serverConfig.json');
+const config = require(process.env.SERVER_CONFIG);
 const { startServer } = require(config.server);
 const { createRouter } = require(config.app);
 

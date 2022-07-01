@@ -1,8 +1,6 @@
-const fs = require('fs');
 const { GuestBook } = require('./guestBook.js');
-const { handleMethod } = require('./handleMethod.js');
-const { guestBookPage, addComment, attachGuestBook } =
-  require('./generateGuestPage.js');
+const { guestBookPage } = require('./generateGuestPage.js');
+const { addComment } = require('./addComment.js');
 
 const catalogPageHandler = (request, response) => {
   response.statusCode = 301;
@@ -11,30 +9,33 @@ const catalogPageHandler = (request, response) => {
   return true;
 };
 
-const handleGuestPageRequest = (
-  template,
-  commentsFile,
-  readFile,
-  writeFile) => {
+const handleGuestPageRequest =
+  (template, commentsFile, readFile, writeFile) => {
+    const guestBook =
+      new GuestBook(template, commentsFile, readFile, writeFile);
+    guestBook.load();
 
-  const guestBook = new GuestBook(template, commentsFile, readFile, writeFile);
-  guestBook.load();
-  
-  const handlers = [
-    handleMethod('/', { 'GET': catalogPageHandler }),
-    handleMethod('/guest-book',
-      { 'GET': attachGuestBook(guestBookPage, guestBook) }),
-    handleMethod('/add-comment',
-      { 'GET': attachGuestBook(addComment, guestBook) }),
-  ];
-    
-  return (request, response) => {
-  for (const handler of handlers) {
-    if (handler(request, response)) {
-      return true;
-    }
+    return (request, response, next) => {
+      const path = request.url.pathname;
+      const method = request.method;
+
+      if (path === '/' && method === 'GET') {
+        catalogPageHandler(request, response, next);
+        return;
+      }
+      if (path === '/guest-book' && method === 'GET') {
+        request['guest-book'] = guestBook;
+        guestBookPage(request, response, next);
+        return;
+      }
+      if (path === '/add-comment' && method === 'POST') {
+        request['guest-book'] = guestBook;
+        addComment(request, response, next);
+        return;
+      }
+      
+      next(request, response, next);
+    };
   };
-  return false;
-}};
 
 module.exports = { handleGuestPageRequest };

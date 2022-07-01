@@ -58,13 +58,13 @@ const serveFileContents = (fileName, body, response) => {
 const fileHandler = (dirPath, fs) => {
   const fileCache = cacheFiles(dirPath, fs);
   
-  return (request, response) => {
+  return (request, response, next) => {
     const fileName = `${dirPath}${request.url.pathname}`;
     
     if (isFile(fileName, fs) && fileCache[fileName]) {
       return serveFileContents(fileName, fileCache[fileName], response);
     }
-    return false;
+    next(request, response, next);
   }
 };
 

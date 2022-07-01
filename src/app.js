@@ -3,7 +3,8 @@ const { readFileSync, writeFileSync } = fs;
 const { notFoundHandler } = require('./app/notFoundHandler.js');
 const { fileHandler } = require('./app/handleFiles.js');
 const { handleGuestPageRequest } = require('./app/requestRouter.js');
-const { routeRequest } = require('./server/router.js');
+// const { routeRequest } = require('./server/router.js');
+const { routeRequest } = require('./server/asyncRouter.js');
 
 
 const createRouter = (path) => {

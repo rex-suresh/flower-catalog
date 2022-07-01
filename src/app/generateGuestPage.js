@@ -25,19 +25,4 @@ const attachGuestBook = (handler, guestBook) => (request, response) => {
   return handler(request, response);
 };
 
-const addComment = (request, response) => {
-  const guestBook = request['guest-book'];
-  const params = getParams(request.url.searchParams);
-  
-  if (params['name'] && params['message']) {
-    guestBook.addComment(params);
-    guestBook.save();
-  }
-
-  response.statusCode = 302;
-  response.setHeader('Location', '/guest-book');
-  response.end();
-  return true;
-};
-
-module.exports = { guestBookPage, addComment, attachGuestBook };
+module.exports = { guestBookPage, attachGuestBook, getParams };
