@@ -3,12 +3,18 @@ const { readFileSync, writeFileSync } = fs;
 const { notFoundHandler } = require('./app/notFoundHandler.js');
 const { fileHandler } = require('./app/handleFiles.js');
 const { handleGuestPageRequest } = require('./app/requestRouter.js');
-// const { routeRequest } = require('./server/router.js');
 const { routeRequest } = require('./server/asyncRouter.js');
+
+const { reqLog } = require('./app/reqLog.js');
+const { loginHandler } = require('./app/loginHandler.js');
+const { injectCookies } = require('./app/injectCookies.js');
 
 
 const createRouter = (path) => {
   const handlers = [
+    reqLog,
+    injectCookies,
+    loginHandler,
     handleGuestPageRequest(
       './src/templates/guest-book.html',
       './data/.comments.json',

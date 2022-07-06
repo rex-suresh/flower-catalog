@@ -3,7 +3,7 @@ const { guestBookPage } = require('./generateGuestPage.js');
 const { addComment } = require('./addComment.js');
 
 const catalogPageHandler = (request, response) => {
-  response.statusCode = 301;
+  response.statusCode = 302;
   response.setHeader('Location', '/flower-catalog.html');
   response.end();
   return true;

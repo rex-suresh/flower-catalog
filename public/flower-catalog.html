@@ -3,6 +3,13 @@
   <head>
     <title>flower-catalog</title>
     <link rel="stylesheet" href="css/flower-catalog.css">
+    <script>
+      const hide = () => {
+        const element = document.getElementById('pot-image');
+        element.style.visibility = 'hidden';
+        setTimeout(() => element.style.visibility = 'visible', 1000);
+      };
+    </script>
   </head>
 
   <body>
@@ -19,11 +26,8 @@
             <li><a href="Abeliophyllum.html">Abeliophyllum</a></li>
             <li><a href="Ageratum.html">Ageratum</a></li>
           </ul>
-          <div id="pot-image">
-            <!-- <input type="image" src="images/animated-flower-image-0021.gif" alt="pot"> -->
-            <a href="#pot-image">
+          <div id="pot-image" onclick="hide()">
               <img src="images/animated-flower-image-0021.gif" alt="pot">
-            </a>
           </div>
           <div>
             <a href="guest-book">Guest Book</a>
