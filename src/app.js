@@ -9,12 +9,13 @@ const { reqLog } = require('./app/reqLog.js');
 const { loginHandler } = require('./app/loginHandler.js');
 const { injectCookies } = require('./app/injectCookies.js');
 
+const sessions = {};
 
 const createRouter = (path) => {
   const handlers = [
     reqLog,
     injectCookies,
-    loginHandler,
+    loginHandler(sessions),
     handleGuestPageRequest(
       './src/templates/guest-book.html',
       './data/.comments.json',
