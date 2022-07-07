@@ -8,6 +8,7 @@ const { routeRequest } = require('./server/asyncRouter.js');
 const { reqLog } = require('./app/reqLog.js');
 const { loginHandler } = require('./app/loginHandler.js');
 const { injectCookies } = require('./app/injectCookies.js');
+const { logOutHandler } = require('./app/logoutHandler.js');
 
 const sessions = {};
 
@@ -16,6 +17,7 @@ const createRouter = (path) => {
     reqLog,
     injectCookies,
     loginHandler(sessions),
+    logOutHandler(sessions),
     handleGuestPageRequest(
       './src/templates/guest-book.html',
       './data/.comments.json',

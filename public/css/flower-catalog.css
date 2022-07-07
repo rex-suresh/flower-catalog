@@ -89,8 +89,3 @@ table {
 table td {
   padding: 0 10px;
 }
-
-#pot-image :target{
-  visibility: hidden;
-  display: none;
-}
