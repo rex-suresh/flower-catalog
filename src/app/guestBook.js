@@ -35,6 +35,9 @@ class GuestBook {
     return this.#page;
   }
 
+  get comments() {
+    return this.#comments;
+  }
 
   #toHtml(tag, content) {
     return `<${tag}>${content}</${tag}>`;

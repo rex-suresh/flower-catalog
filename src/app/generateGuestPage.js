@@ -4,11 +4,11 @@ const insertCommentsToPage = (guestBook) => {
   return pageRaw.replace(commentsPlaceHolder, guestBook.toString());
 };
 
-const guestBookPage = (request, response) => {
+const guestBookPage = (request, response, next) => {
   const guestBook = request['guest-book'];
   const page = insertCommentsToPage(guestBook);  
   response.end(page);
-  return true;
+  return;
 };
 
 const getParams = (searchParams) => {

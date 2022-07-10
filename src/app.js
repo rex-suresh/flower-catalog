@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { readFileSync, writeFileSync } = fs;
+
 const { notFoundHandler } = require('./app/notFoundHandler.js');
 const { fileHandler } = require('./app/handleFiles.js');
 const { handleGuestPageRequest } = require('./app/requestRouter.js');

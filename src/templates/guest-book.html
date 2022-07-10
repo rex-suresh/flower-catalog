@@ -3,6 +3,9 @@
   <head>
     <title>guest-book</title>
     <link rel="stylesheet" href="css/flower-catalog.css">
+    <script src="submit.js"></script>
+    <script src="xhr.js"></script>
+    <script src="loadComments.js"></script>
   </head>
 
   <body>
@@ -21,18 +24,14 @@
               <textarea type="text" name="message"></textarea>
             </label>
           </div>
-          <div><input type="submit" value="Submit"></div>
         </form>
+        <div>
+          <input type="button" value="Submit" onclick="submitComment()">
+        </div>
 
       </div>
       <section>
-        <table>
-          <tr>
-            <th>DATE, TIME</th>
-            <th>NAME</th>
-            <th>COMMENTS_LIST</th>
-          </tr>
-          _DATE_TIME_NAME_COMMENTS_LIST_
+        <table id="comments-table">
         </table>
       </section>
 

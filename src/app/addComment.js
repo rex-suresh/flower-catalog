@@ -1,18 +1,16 @@
-const { getParams } = require("./generateGuestPage");
+const { getParams } = require('./generateGuestPage.js');
 
 const addComment = (request, response) => {
   const guestBook = request['guest-book'];
   const params = getParams(request.bodyParams);
 
-  if (params['message']) {
+  if (params.message) {
     guestBook.addComment({...params, name: request.session.username});
     guestBook.save();
   }
 
-  response.statusCode = 302;
-  response.setHeader('Location', '/guest-book');
-  response.end();
-  return true;
+  response.setHeader('Content-type', 'application/json');
+  response.end(JSON.stringify(guestBook.comments));
 };
 
 module.exports = { addComment };
