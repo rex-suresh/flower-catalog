@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const addSession = (sessions) => (req, res) => {
   const username = req.bodyParams.get('name');
   const time = new Date();
@@ -21,23 +23,7 @@ const entryDenied = (req, res) => {
 };
 
 const serveLoginPage = (req, res) => {
-  const page = `<html>
-<head>
-  <title>Login Page</title>
-</head>
-<body>
-  <div class="page">
-    <form action="/login" method="post">
-      <div>
-        <label for="name">Username : </label>
-        <input type="text" name="name" placeholder="enter your username" value="someone">
-      </div>
-      <input type="submit">
-    </form>
-  </div>
-</body>
-
-</html>`;
+  const page = fs.readFileSync('public/loginPage.html');
 
   res.setHeader('Content-type', 'text/html');
   res.end(page);

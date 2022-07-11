@@ -42,6 +42,7 @@ const getContentType = (ext) => {
     '.jpg': 'image/jpeg',
     '.gif': 'image/gif',
     '.pdf': 'application/pdf',
+    '.js': 'text/javascript',
   };
   return contentTypes[ext] || 'text/plain';
 };

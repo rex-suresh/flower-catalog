@@ -2,44 +2,35 @@ const createElm = (tag) => document.createElement(tag);
 
 const addCommentRow = (comment, commentRow) => {
   const { name, message, date } = comment;
+  const row = [date ,name, message];
 
-  const nameEl = createElm('td');
-  nameEl.innerText = name;
-  commentRow.appendChild(nameEl);
-
-  const messageEl = createElm('td');
-  messageEl.innerText = message;
-  commentRow.appendChild(messageEl);
-
-  const dateEl = createElm('td');
-  dateEl.innerText = date;
-  commentRow.appendChild(dateEl);
+  row.forEach((entry) => {
+    const element = createElm('td');
+    commentRow.appendChild(element);
+    element.innerText = entry;
+  });
 };
 
 const commentsHeaderRow = () => {
   const header = document.createElement('tr');
+  
+  const row = ['Date, Time', 'Name', 'Comment'];
 
-  const date = createElm('th');
-  date.innerText = 'DATE, TIME';
-  header.appendChild(date);
-
-  const name = createElm('th');
-  name.innerText = 'NAME';
-  header.appendChild(name);
-
-  const comment = createElm('th');
-  comment.innerText = 'COMMENT';
-  header.appendChild(comment);
+  row.forEach((entry) => {
+    const element = createElm('th');
+    header.appendChild(element);
+    element.innerText = entry;
+  });
 
   return header;
 };
 
 const loadComments = (xhr, event) => {
-  const comments = JSON.parse(xhr.response);
-  console.log(comments);
   const commentsBlock = document.querySelector('#comments-table');
-  commentsBlock.innerHTML = '';
+  const comments = JSON.parse(xhr.response);
   
+  commentsBlock.innerHTML = '';
+  commentsBlock.appendChild(commentsHeaderRow());
   comments.forEach(comment => {
     const commentRow = createElm('tr');
     commentsBlock.appendChild(commentRow);
@@ -47,3 +38,8 @@ const loadComments = (xhr, event) => {
   });
 };
 
+const getComments = () => {
+  xhr(loadComments, 'GET', '/comments');
+};
+
+window.onload = getComments;
