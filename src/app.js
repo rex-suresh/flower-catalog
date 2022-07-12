@@ -10,11 +10,13 @@ const { reqLog } = require('./app/reqLog.js');
 const { loginHandler } = require('./app/loginHandler.js');
 const { injectCookies } = require('./app/injectCookies.js');
 const { logOutHandler } = require('./app/logoutHandler.js');
+const { injectReqParts } = require('./app/injectReqParts.js');
 
 const sessions = {};
 
 const createRouter = (path) => {
   const handlers = [
+    injectReqParts,
     reqLog,
     injectCookies,
     loginHandler(sessions),
