@@ -15,13 +15,12 @@ const getFiles = (dir, fs) => {
 };
 
 const readFile = (file, fileCache, fs) => {
-  fs.readFile(file, (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  try {
+    const data = fs.readFileSync(file);
     fileCache[file] = data;
-  })
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const cacheFiles = (contentDir, fs) => {
@@ -58,7 +57,6 @@ const serveFileContents = (fileName, body, response) => {
 
 const fileHandler = (dirPath, fs) => {
   const fileCache = cacheFiles(dirPath, fs);
-  
   return (request, response, next) => {
     const fileName = `${dirPath}${request.url.pathname}`;
     

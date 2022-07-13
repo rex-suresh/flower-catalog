@@ -7,6 +7,7 @@ const insertCommentsToPage = (guestBook) => {
 const guestBookPage = (request, response, next) => {
   const guestBook = request['guest-book'];
   const page = insertCommentsToPage(guestBook);  
+  response.setHeader('content-type', 'text/html')
   response.end(page);
   return;
 };

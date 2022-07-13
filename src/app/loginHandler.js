@@ -12,7 +12,7 @@ const addSession = (sessions) => (req, res) => {
   };
 
   res.setHeader('Set-Cookie', `sessionId=${sessionId}`);
-  res.end(`${username} is Logged in !!!`);
+  res.end(`${username} is logged in !!!`);
   return;
 };
 
