@@ -3,5 +3,7 @@
   "app": "./src/app.js",
   "public": "./public",
   "port": 80,
-  "host": "localhost"
+  "host": "localhost",
+  "data": "./data/.comments.json",
+  "template": "./src/templates/guest-book.html"
 }

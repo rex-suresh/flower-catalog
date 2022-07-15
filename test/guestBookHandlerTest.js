@@ -5,7 +5,7 @@ describe('GuestBook handler', () => {
   it('should serve guestBook page', (done) => {
     request(createRouter('public', {
       123: { username: 'Suresh', sessionId: '123', time: 'time' }
-    }))
+    }, false))
     .get('/guest-book')
     .set("Cookie", "sessionId=123")
     .expect(200)
@@ -18,7 +18,7 @@ describe('Add-comments', () => {
   it('should add Comments and send all comments as response', (done) => {
     request(createRouter('public', {
       153: { username: 'Suresh', sessionId: '153', time: 'time' }
-    }))
+    }, false))
     .post('/add-comment')
     .set("Cookie", "sessionId=153")
     .expect(200)
@@ -31,7 +31,7 @@ describe('Comments', () => {
   it('should send the comments as response', (done) => {
     request(createRouter('public', {
       111: { username: 'kumar', sessionId: '111', time: 'time' }
-    }))
+    }, false))
       .get('/comments')
     .set("Cookie", "sessionId=111")
     .expect(200)

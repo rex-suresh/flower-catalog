@@ -51,7 +51,7 @@ const serveFileContents = (fileName, body, response) => {
   const contentType = getContentType(fileExt);
   
   response.setHeader('Content-type', contentType);
-  response.end(body);
+  response.send(body);
   return true;
 };
 

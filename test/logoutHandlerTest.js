@@ -4,7 +4,7 @@ const { createRouter } = require('../src/app.js');
 
 describe('loginPageHandler', () => {
   it('should deny when tried to enter without cookie', (done) => {
-    request(createRouter('public', {}))
+    request(createRouter('public', {}, false))
       .get('/logout')
       .expect(401)
       .expect('Entry Denied!!!', done)
@@ -15,7 +15,7 @@ describe('loginPageHandler', () => {
       123: { username: 'Suresh', sessionId: '123', time: 'time' }
     };
 
-    request(createRouter('public', sessions))
+    request(createRouter('public', sessions, false))
       .get('/logout')
       .set("Cookie", "sessionId=123")
       .expect(200)

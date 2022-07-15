@@ -2,7 +2,7 @@ const injectCookies = (req, res, next) => {
   const cookiesString = req.headers.cookie;
   let cookies = {};
   if (cookiesString) {
-    cookies= parseCookies(cookiesString);
+    cookies = parseCookies(cookiesString);
   }
   req.cookies = cookies;
   next();
