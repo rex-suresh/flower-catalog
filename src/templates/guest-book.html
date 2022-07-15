@@ -17,17 +17,18 @@
       <div class="guest-book">
         <h3>Leave a comment</h3>
 
-        <form action="add-comment" method="post">
+        <form action="/guest-book/add-comment" method="post">
           <div>
             <label for="comment">
               Comment :
               <textarea type="text" name="message"></textarea>
             </label>
           </div>
+          <div>
+            <input type="button" value="Send" onclick="submitComment()">
+            <!-- <input type="submit" value="Submit"> -->
+            </div>
         </form>
-        <div>
-          <input type="button" value="Submit" onclick="submitComment()">
-        </div>
 
       </div>
       <section>

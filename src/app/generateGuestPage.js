@@ -4,7 +4,7 @@ const insertCommentsToPage = (guestBook) => {
   return pageRaw.replace(commentsPlaceHolder, guestBook.toString());
 };
 
-const guestBookPage = (request, response, next) => {
+const guestBookPage = (request, response) => {
   const guestBook = request['guest-book'];
   const page = insertCommentsToPage(guestBook);  
   response.setHeader('content-type', 'text/html')

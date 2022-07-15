@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const addSession = (sessions) => (req, res) => {
+const addCookie = (sessions) => (req, res) => {
   const username = req.body.name;
   const time = new Date();
   const sessionId = time.getTime();
@@ -18,10 +18,9 @@ const addSession = (sessions) => (req, res) => {
 
 const serveLoginPage = (sessions) => (req, res) => {
   const sessionId = req.cookies?.sessionId;
-  const page = fs.readFileSync('public/loginPage.html', 'utf-8');
   
   if (!sessionId || !sessions[sessionId]) {
-    res.send(page);
+    res.sendFile('/loginPage.html', {root: process.cwd().concat('/public')});
     return;
   }
 
@@ -51,5 +50,5 @@ const checkCredentials = (sessions) => (req, res, next) => {
 };
 
 module.exports = {
-  checkCredentials, attachSession, addSession, serveLoginPage
+  checkCredentials, attachSession, addCookie, serveLoginPage
 };

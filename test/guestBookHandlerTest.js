@@ -19,7 +19,7 @@ describe('Add-comments', () => {
     request(createRouter('public', {
       153: { username: 'Suresh', sessionId: '153', time: 'time' }
     }, false))
-    .post('/add-comment')
+    .post('/guest-book/add-comment')
     .set("Cookie", "sessionId=153")
     .expect(200)
     .expect('content-type', /json/)
@@ -32,7 +32,7 @@ describe('Comments', () => {
     request(createRouter('public', {
       111: { username: 'kumar', sessionId: '111', time: 'time' }
     }, false))
-      .get('/comments')
+      .get('/guest-book/comments')
     .set("Cookie", "sessionId=111")
     .expect(200)
     .expect('content-type', /json/)

@@ -38,23 +38,6 @@ class GuestBook {
   get comments() {
     return this.#comments;
   }
-
-  #toHtml(tag, content) {
-    return `<${tag}>${content}</${tag}>`;
-  }
-
-  #getRowString({ name, message, date }) {
-    const nameString = this.#toHtml('td', name);
-    const messageString = this.#toHtml('td', message);
-    const dateString = this.#toHtml('td', date);
-
-    const rowContent = [dateString, nameString, messageString].join('');
-    return this.#toHtml('tr', rowContent);
-  }
-
-  toString() {
-    return this.#comments.map(comment => this.#getRowString(comment)).join('');
-  }
 }
 
 module.exports = { GuestBook };

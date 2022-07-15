@@ -1,4 +1,4 @@
-const commentsHandler = (req, res, next) => {
+const commentsHandler = (req, res) => {
   const guestBook = req['guest-book'];
   res.json(guestBook.comments);
 };

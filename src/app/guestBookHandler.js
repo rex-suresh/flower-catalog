@@ -11,21 +11,18 @@ const getGuestBook = (template, commentsFile) => {
   return guestBook;
 };
 
-const serveGuestBook = (guestBook) => (req, res, next) => {
+const injectGuestBook = (guestBook) => (req, res, next) => {
   req['guest-book'] = guestBook;
-  guestBookPage(req, res, next);
+  next();
 };
 
-const addCommentToGuestBook = (guestBook) => (req, res, next) => {
-  req['guest-book'] = guestBook;
-  addComment(req, res, next);
+const guestBookRoutes = (guestBook, guestBookRouter) => {
+  guestBookRouter.use(injectGuestBook(guestBook));
+  guestBookRouter.get('/', guestBookPage);
+  guestBookRouter.post('/add-comment', addComment);
+  guestBookRouter.get('/comments', commentsHandler);
+
+  return guestBookRouter
 };
 
-const comments = (guestBook) => (req, res, next) => {
-  req['guest-book'] = guestBook;
-  commentsHandler(req, res, next);
-};
-
-module.exports = {
-  getGuestBook, comments, addCommentToGuestBook, serveGuestBook
-};
+module.exports = { injectGuestBook, getGuestBook, guestBookRoutes };

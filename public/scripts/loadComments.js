@@ -39,7 +39,7 @@ const loadComments = (xhr, event) => {
 };
 
 const getComments = () => {
-  xhr(loadComments, 'GET', '/comments');
+  xhr(loadComments, 'GET', '/guest-book/comments');
 };
 
 window.onload = getComments;

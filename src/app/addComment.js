@@ -1,12 +1,12 @@
-const addComment = (request, response) => {
-  const guestBook = request['guest-book'];
-  const params = request.body;
-
+const addComment = (req, res) => {
+  const guestBook = req['guest-book'];
+  const params = req.body;
+  
   if (params.message) {
-    guestBook.addComment({...params, name: request.session.username});
+    guestBook.addComment({...params, name: req.session.username});
     guestBook.save();
   }
-  response.json(guestBook.comments);
+  res.json(guestBook.comments);
 };
 
 module.exports = { addComment };
